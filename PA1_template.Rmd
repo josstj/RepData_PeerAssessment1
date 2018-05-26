@@ -8,7 +8,18 @@ output:
 
 ## Loading and preprocessing the data
 
+```{r}
+unzip("activity.zip")
+activity = read.csv("activity.csv")
+activity$date <- as.Date(activity$date, format = "%Y-%m-%d")
+activity$hour <- activity$interval %/% 100
+activity$minute <- activity$interval - (activity$hour * 100)
+activity$time <- activity$hour * 60 * 60 + activity$minute * 60
+activity$time <- hms::as.hms(activity$time)
+activity$date_time <- as.POSIXct(paste(activity$date, activity$time), format="%Y-%m-%d %H:%M:%S")
 
+View(activity)
+```
 
 ## What is mean total number of steps taken per day?
 

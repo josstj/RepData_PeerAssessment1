@@ -29,7 +29,7 @@ The code below calculates the total steps taken per day, and prints out the tota
 library(dplyr)
 ```
 
-```{r}
+```{r,include=TRUE}
 activity_date <- group_by(activity,date)
 activity_date <- summarise(activity_date,steps_sum = sum(steps,na.rm = TRUE))
 head(activity_date)
@@ -111,7 +111,7 @@ The following code creates a new column of data where the original data is fille
 library(tidyr)
 ```
 
-```{r}
+```{r,include=TRUE}
 activity_filled <- left_join(activity,activity_minute,by = "interval")
 activity_filled$steps_clean <- ifelse(is.na(activity_filled$steps),activity_filled$steps_mean,activity_filled$steps)
 ```

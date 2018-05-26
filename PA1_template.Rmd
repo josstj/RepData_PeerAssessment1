@@ -5,8 +5,9 @@ output:
     keep_md: true
 ---
 
-
 ## Loading and preprocessing the data
+
+The following code loads the data, and creates new date and time fields to ease future processing.  
 
 ```{r}
 unzip("activity.zip")
@@ -15,14 +16,52 @@ activity$date <- as.Date(activity$date, format = "%Y-%m-%d")
 activity$hour <- activity$interval %/% 100
 activity$minute <- activity$interval - (activity$hour * 100)
 activity$time <- activity$hour * 60 * 60 + activity$minute * 60
-activity$time <- hms::as.hms(activity$time)
+    activity$time <- hms::as.hms(activity$time)
 activity$date_time <- as.POSIXct(paste(activity$date, activity$time), format="%Y-%m-%d %H:%M:%S")
-
-View(activity)
+#head(activity)
 ```
 
 ## What is mean total number of steps taken per day?
 
+The code below calculates the total steps taken per day, and prints out the total steps for the first six days.   
+
+```{r, include = FALSE}
+library(dplyr)
+```
+
+```{r}
+activity_date <- group_by(activity,date)
+activity_date <- summarise(activity_date,steps_sum = sum(steps,na.rm = TRUE))
+head(activity_date)
+```
+
+The code below generates a histogram of the total steps taken per day.   
+
+```{r}
+par(mar=c(5.1,4.1,4.5,2.1))
+hist(activity_date$steps_sum, breaks = 15, main= "Histogram of Steps per day", cex.main=1,
+     xlab="Steps per Day", labels = TRUE, ylim= c(0,20)
+     )
+rug(activity_date$steps_sum)
+abline(v=mean(activity_date$steps_sum),col="red",lwd=2)
+abline(v=median(activity_date$steps_sum),col="blue",lwd=2)
+legend(x = "topright", 
+ c("Mean", "Median"),
+ col = c("red", "blue"),
+ lwd = c(2, 2))
+
+```
+
+Find the mean steps per day:
+```{r}
+mean(activity_date$steps_sum)
+```
+
+
+Find the median steps per day:
+```{r}
+median(activity_date$steps_sum)
+```
 
 
 ## What is the average daily activity pattern?

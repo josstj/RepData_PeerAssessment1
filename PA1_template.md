@@ -1,0 +1,99 @@
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
+
+## Loading and preprocessing the data
+
+The following code loads the data, and creates new date and time fields to ease future processing.  
+
+
+```r
+unzip("activity.zip")
+activity = read.csv("activity.csv")
+activity$date <- as.Date(activity$date, format = "%Y-%m-%d")
+activity$hour <- activity$interval %/% 100
+activity$minute <- activity$interval - (activity$hour * 100)
+activity$time <- activity$hour * 60 * 60 + activity$minute * 60
+    activity$time <- hms::as.hms(activity$time)
+activity$date_time <- as.POSIXct(paste(activity$date, activity$time), format="%Y-%m-%d %H:%M:%S")
+#head(activity)
+```
+
+## What is mean total number of steps taken per day?
+
+The code below calculates the total steps taken per day, and prints out the total steps for the first six days.   
+
+
+
+
+```r
+activity_date <- group_by(activity,date)
+activity_date <- summarise(activity_date,steps_sum = sum(steps,na.rm = TRUE))
+head(activity_date)
+```
+
+```
+## # A tibble: 6 x 2
+##   date       steps_sum
+##   <date>         <int>
+## 1 2012-10-01         0
+## 2 2012-10-02       126
+## 3 2012-10-03     11352
+## 4 2012-10-04     12116
+## 5 2012-10-05     13294
+## 6 2012-10-06     15420
+```
+
+The code below generates a histogram of the total steps taken per day.   
+
+
+```r
+par(mar=c(5.1,4.1,4.5,2.1))
+hist(activity_date$steps_sum, breaks = 15, main= "Histogram of Steps per day", cex.main=1,
+     xlab="Steps per Day", labels = TRUE, ylim= c(0,20)
+     )
+rug(activity_date$steps_sum)
+abline(v=mean(activity_date$steps_sum),col="red",lwd=2)
+abline(v=median(activity_date$steps_sum),col="blue",lwd=2)
+legend(x = "topright", 
+ c("Mean", "Median"),
+ col = c("red", "blue"),
+ lwd = c(2, 2))
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+Find the mean steps per day:
+
+```r
+mean(activity_date$steps_sum)
+```
+
+```
+## [1] 9354.23
+```
+
+
+Find the median steps per day:
+
+```r
+median(activity_date$steps_sum)
+```
+
+```
+## [1] 10395
+```
+
+
+## What is the average daily activity pattern?
+
+
+
+## Imputing missing values
+
+
+
+## Are there differences in activity patterns between weekdays and weekends?

@@ -51,6 +51,7 @@ The code below generates a histogram of the total steps taken per day.
 
 
 ```r
+png('figure/plot1.png')
 par(mar=c(5.1,4.1,4.5,2.1))
 hist(activity_date$steps_sum, breaks = 15, main= "Histogram of Steps per day", cex.main=1,
      xlab="Steps per Day", labels = TRUE, ylim= c(0,20)
@@ -62,20 +63,6 @@ legend(x = "topright",
  c("Mean", "Median"),
  col = c("red", "blue"),
  lwd = c(2, 2))
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
-
-```r
-dev.copy(png,'figure/plot1.png')
-```
-
-```
-## png 
-##   3
-```
-
-```r
 dev.off()
 ```
 
@@ -84,7 +71,7 @@ dev.off()
 ##   2
 ```
 
-![test](figure/plot1.png)
+![plot1](figure/plot1.png)
 
 
 Find the mean steps per day:
@@ -116,21 +103,10 @@ The code below creates the average daily activity pattern:
 ```r
 activity_minute <- group_by(activity,interval)
 activity_minute <- summarise(activity_minute,steps_mean = mean(steps,na.rm = TRUE))
+
+png('figure/plot2.png')
 plot(x = activity_minute$interval,y = activity_minute$steps_mean,type = "l", main = "Daily activity pattern", xlab = "Time of Day", ylab = "average steps in 5 minute interval")
-```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
-
-```r
-dev.copy(png,'figure/plot2.png')
-```
-
-```
-## png 
-##   3
-```
-
-```r
 dev.off()
 ```
 
@@ -138,6 +114,8 @@ dev.off()
 ## png 
 ##   2
 ```
+
+![plot2](figure/plot2.png)
 
 Which 5 minute interval, on average across all days in the dataset, contains the maximum number of steps?
 
@@ -216,6 +194,7 @@ head(activity_date2)
 ```
 
 ```r
+png('figure/plot3.png')
 par(mar=c(5.1,4.1,4.5,2.1))
 hist(activity_date2$steps_sum, breaks = 15, main= "Histogram of Steps per Day - Imputed NAs", cex.main=1,
      xlab="Steps per Day", labels = TRUE, ylim= c(0,30)
@@ -228,20 +207,6 @@ legend(x = "topright",
  col = c("red", "blue"),
  lwd = c(2, 2),
   lty = c(1,2))
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
-
-```r
-dev.copy(png,'plot2.png')
-```
-
-```
-## png 
-##   3
-```
-
-```r
 dev.off()
 ```
 
@@ -249,6 +214,9 @@ dev.off()
 ## png 
 ##   2
 ```
+
+![plot3](figure/plot3.png)
+
 
 Find the new mean steps per day:
 
@@ -289,23 +257,10 @@ weekday_minute <- group_by(weekday,interval)
 weekend_minute <- summarise(weekend_minute,steps_mean = mean(steps_clean))
 weekday_minute <- summarise(weekday_minute, steps_mean = mean(steps_clean))
 
+png('figure/plot4.png')
 par(mfrow = c(2,1))
 plot(x = weekend_minute$interval,y = weekend_minute$steps_mean,type = "l", main = "Weekend", xlab = "Time of Day", ylab = "Steps")
 plot(x=weekday_minute$interval,y=weekday_minute$steps_mean,type = "l",main = "Weekday", xlab = "Time of Day", ylab = "Steps")
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
-
-```r
-dev.copy(png,'plot3.png')
-```
-
-```
-## png 
-##   3
-```
-
-```r
 dev.off()
 ```
 
@@ -313,5 +268,5 @@ dev.off()
 ## png 
 ##   2
 ```
-
+![plot4](figure/plot4.png)
 

@@ -38,6 +38,7 @@ head(activity_date)
 The code below generates a histogram of the total steps taken per day.   
 
 ```{r}
+png('figure/plot1.png')
 par(mar=c(5.1,4.1,4.5,2.1))
 hist(activity_date$steps_sum, breaks = 15, main= "Histogram of Steps per day", cex.main=1,
      xlab="Steps per Day", labels = TRUE, ylim= c(0,20)
@@ -49,13 +50,12 @@ legend(x = "topright",
  c("Mean", "Median"),
  col = c("red", "blue"),
  lwd = c(2, 2))
-dev.copy(png,'figure/plot1.png')
 dev.off()
 
 
 ```
 
-![test](figure/plot1.png)
+![plot1](figure/plot1.png)
 
 
 Find the mean steps per day:
@@ -76,10 +76,14 @@ The code below creates the average daily activity pattern:
 ```{r}
 activity_minute <- group_by(activity,interval)
 activity_minute <- summarise(activity_minute,steps_mean = mean(steps,na.rm = TRUE))
+
+png('figure/plot2.png')
 plot(x = activity_minute$interval,y = activity_minute$steps_mean,type = "l", main = "Daily activity pattern", xlab = "Time of Day", ylab = "average steps in 5 minute interval")
-dev.copy(png,'figure/plot2.png')
+
 dev.off()
 ```
+
+![plot2](figure/plot2.png)
 
 Which 5 minute interval, on average across all days in the dataset, contains the maximum number of steps?
 
@@ -120,6 +124,7 @@ activity_date2 <- group_by(activity_filled,date)
 activity_date2 <- summarise(activity_date2,steps_sum = sum(steps_clean,na.rm = TRUE))
 head(activity_date2)
 
+png('figure/plot3.png')
 par(mar=c(5.1,4.1,4.5,2.1))
 hist(activity_date2$steps_sum, breaks = 15, main= "Histogram of Steps per Day - Imputed NAs", cex.main=1,
      xlab="Steps per Day", labels = TRUE, ylim= c(0,30)
@@ -132,9 +137,11 @@ legend(x = "topright",
  col = c("red", "blue"),
  lwd = c(2, 2),
   lty = c(1,2))
-dev.copy(png,'plot2.png')
 dev.off()
 ```
+
+![plot3](figure/plot3.png)
+
 
 Find the new mean steps per day:
 ```{r}
@@ -164,11 +171,11 @@ weekday_minute <- group_by(weekday,interval)
 weekend_minute <- summarise(weekend_minute,steps_mean = mean(steps_clean))
 weekday_minute <- summarise(weekday_minute, steps_mean = mean(steps_clean))
 
+png('figure/plot4.png')
 par(mfrow = c(2,1))
 plot(x = weekend_minute$interval,y = weekend_minute$steps_mean,type = "l", main = "Weekend", xlab = "Time of Day", ylab = "Steps")
 plot(x=weekday_minute$interval,y=weekday_minute$steps_mean,type = "l",main = "Weekday", xlab = "Time of Day", ylab = "Steps")
-dev.copy(png,'plot3.png')
 dev.off()
 ```
-
+![plot4](figure/plot4.png)
 

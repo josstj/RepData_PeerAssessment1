@@ -49,8 +49,14 @@ legend(x = "topright",
  c("Mean", "Median"),
  col = c("red", "blue"),
  lwd = c(2, 2))
+dev.copy(png,'figure/plot1.png')
+dev.off()
+
 
 ```
+
+![test](figure/plot1.png)
+
 
 Find the mean steps per day:
 ```{r}
@@ -71,6 +77,8 @@ The code below creates the average daily activity pattern:
 activity_minute <- group_by(activity,interval)
 activity_minute <- summarise(activity_minute,steps_mean = mean(steps,na.rm = TRUE))
 plot(x = activity_minute$interval,y = activity_minute$steps_mean,type = "l", main = "Daily activity pattern", xlab = "Time of Day", ylab = "average steps in 5 minute interval")
+dev.copy(png,'figure/plot2.png')
+dev.off()
 ```
 
 Which 5 minute interval, on average across all days in the dataset, contains the maximum number of steps?
@@ -124,7 +132,8 @@ legend(x = "topright",
  col = c("red", "blue"),
  lwd = c(2, 2),
   lty = c(1,2))
-
+dev.copy(png,'plot2.png')
+dev.off()
 ```
 
 Find the new mean steps per day:
@@ -158,7 +167,8 @@ weekday_minute <- summarise(weekday_minute, steps_mean = mean(steps_clean))
 par(mfrow = c(2,1))
 plot(x = weekend_minute$interval,y = weekend_minute$steps_mean,type = "l", main = "Weekend", xlab = "Time of Day", ylab = "Steps")
 plot(x=weekday_minute$interval,y=weekday_minute$steps_mean,type = "l",main = "Weekday", xlab = "Time of Day", ylab = "Steps")
-
+dev.copy(png,'plot3.png')
+dev.off()
 ```
 
 

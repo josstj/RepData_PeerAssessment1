@@ -66,6 +66,27 @@ legend(x = "topright",
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
+```r
+dev.copy(png,'figure/plot1.png')
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
+
+![test](figure/plot1.png)
+
+
 Find the mean steps per day:
 
 ```r
@@ -99,6 +120,24 @@ plot(x = activity_minute$interval,y = activity_minute$steps_mean,type = "l", mai
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+```r
+dev.copy(png,'figure/plot2.png')
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
 
 Which 5 minute interval, on average across all days in the dataset, contains the maximum number of steps?
 
@@ -193,6 +232,24 @@ legend(x = "topright",
 
 ![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
+```r
+dev.copy(png,'plot2.png')
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
+
 Find the new mean steps per day:
 
 ```r
@@ -238,5 +295,23 @@ plot(x=weekday_minute$interval,y=weekday_minute$steps_mean,type = "l",main = "We
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+
+```r
+dev.copy(png,'plot3.png')
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   2
+```
 
 
